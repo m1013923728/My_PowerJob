@@ -41,4 +41,5 @@ public class TypeStore {
 
     public static final TypeReference<ResultDTO<List<WorkflowNodeInfoDTO>>> WF_NODE_LIST_RESULT_TYPE = new  TypeReference<ResultDTO<List<WorkflowNodeInfoDTO>>> () {};
 
+    public static final TypeReference<ResultDTO<PageResult<WorkflowInstanceInfoDTO>>> PAGE_WF_INSTANCE_RESULT_TYPE = new TypeReference<ResultDTO<PageResult<WorkflowInstanceInfoDTO>>>(){};
 }

@@ -1,9 +1,10 @@
 package tech.powerjob.server.persistence.remote.repository;
 
-import tech.powerjob.server.persistence.remote.model.WorkflowInstanceInfoDO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import tech.powerjob.server.persistence.remote.model.WorkflowInstanceInfoDO;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * @author tjq
  * @since 2020/5/26
  */
-public interface WorkflowInstanceInfoRepository extends JpaRepository<WorkflowInstanceInfoDO, Long> {
+public interface WorkflowInstanceInfoRepository extends JpaRepository<WorkflowInstanceInfoDO, Long>, JpaSpecificationExecutor<WorkflowInstanceInfoDO> {
 
     /**
      * 查找对应工作流实例

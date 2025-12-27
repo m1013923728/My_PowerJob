@@ -20,6 +20,7 @@ import tech.powerjob.common.request.http.SaveWorkflowNodeRequest;
 import tech.powerjob.common.request.http.SaveWorkflowRequest;
 import tech.powerjob.common.request.query.InstancePageQuery;
 import tech.powerjob.common.request.query.JobInfoQuery;
+import tech.powerjob.common.request.query.WorkflowInstancePageQuery;
 import tech.powerjob.common.response.*;
 import tech.powerjob.common.serialize.JsonUtils;
 import tech.powerjob.common.utils.CommonUtils;
@@ -554,6 +555,13 @@ public class PowerJobClient implements IPowerJobClient, Closeable {
 
         String post = requestService.request(OpenAPIConstant.FETCH_WORKFLOW_INSTANCE_INFO, PowerRequestBody.newFormRequestBody(param));
         return JSON.parseObject(post, WF_INSTANCE_RESULT_TYPE);
+    }
+
+    @Override
+    public ResultDTO<PageResult<WorkflowInstanceInfoDTO>> queryWorkflowInstanceInfo(WorkflowInstancePageQuery workflowInstancePageQuery) {
+        workflowInstancePageQuery.setAppIdEq(appId);
+        String post = requestService.request(OpenAPIConstant.QUERY_WORKFLOW_INSTANCE, PowerRequestBody.newJsonRequestBody(workflowInstancePageQuery));
+        return JSON.parseObject(post, PAGE_WF_INSTANCE_RESULT_TYPE);
     }
 
     @Override

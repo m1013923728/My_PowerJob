@@ -6,6 +6,7 @@ import tech.powerjob.common.request.http.SaveWorkflowNodeRequest;
 import tech.powerjob.common.request.http.SaveWorkflowRequest;
 import tech.powerjob.common.request.query.InstancePageQuery;
 import tech.powerjob.common.request.query.JobInfoQuery;
+import tech.powerjob.common.request.query.WorkflowInstancePageQuery;
 import tech.powerjob.common.response.*;
 
 import java.util.List;
@@ -82,4 +83,6 @@ public interface IPowerJobClient {
     ResultDTO<Void> markWorkflowNodeAsSuccess(Long wfInstanceId, Long nodeId);
 
     ResultDTO<WorkflowInstanceInfoDTO> fetchWorkflowInstanceInfo(Long wfInstanceId);
+
+    ResultDTO<PageResult<WorkflowInstanceInfoDTO>> queryWorkflowInstanceInfo(WorkflowInstancePageQuery workflowInstancePageQuery);
 }

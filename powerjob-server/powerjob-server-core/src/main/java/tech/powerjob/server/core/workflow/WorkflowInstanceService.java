@@ -4,19 +4,25 @@ import com.alibaba.fastjson.JSON;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tech.powerjob.common.SystemInstanceResult;
 import tech.powerjob.common.enums.InstanceStatus;
+import tech.powerjob.common.enums.SwitchableStatus;
 import tech.powerjob.common.enums.WorkflowInstanceStatus;
 import tech.powerjob.common.enums.WorkflowNodeType;
 import tech.powerjob.common.exception.PowerJobException;
 import tech.powerjob.common.model.PEWorkflowDAG;
+import tech.powerjob.common.request.query.WorkflowInstancePageQuery;
+import tech.powerjob.common.response.PageResult;
 import tech.powerjob.common.response.WorkflowInstanceInfoDTO;
-import tech.powerjob.common.enums.SwitchableStatus;
 import tech.powerjob.server.common.utils.SpringUtils;
 import tech.powerjob.server.core.instance.InstanceService;
 import tech.powerjob.server.core.lock.UseCacheLock;
 import tech.powerjob.server.core.workflow.algorithm.WorkflowDAGUtils;
+import tech.powerjob.server.persistence.QueryConvertUtils;
 import tech.powerjob.server.persistence.remote.model.WorkflowInfoDO;
 import tech.powerjob.server.persistence.remote.model.WorkflowInstanceInfoDO;
 import tech.powerjob.server.persistence.remote.repository.WorkflowInfoRepository;
@@ -24,8 +30,10 @@ import tech.powerjob.server.persistence.remote.repository.WorkflowInstanceInfoRe
 import tech.powerjob.server.remote.server.redirector.DesignateServer;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 工作流实例服务
@@ -172,6 +180,29 @@ public class WorkflowInstanceService {
             throw new PowerJobException("Permission Denied!");
         }
         return wfInstance;
+    }
+
+    public PageResult<WorkflowInstanceInfoDTO> queryWorkflowInstance(WorkflowInstancePageQuery powerQuery) {
+        Specification<WorkflowInstanceInfoDO> specification = QueryConvertUtils.toSpecification(powerQuery);
+        Pageable pageable = QueryConvertUtils.toPageable(powerQuery);
+        Page<WorkflowInstanceInfoDO> wfInstancePage = wfInstanceInfoRepository.findAll(specification, pageable);
+
+        PageResult<WorkflowInstanceInfoDTO> ret = new PageResult<>();
+        List<WorkflowInstanceInfoDTO> instanceInfoDTOList = wfInstancePage.get().map(WorkflowInstanceService::directConvert).collect(Collectors.toList());
+
+        ret.setData(instanceInfoDTOList)
+                .setIndex(wfInstancePage.getNumber())
+                .setPageSize(wfInstancePage.getSize())
+                .setTotalPages(wfInstancePage.getTotalPages())
+                .setTotalItems(wfInstancePage.getTotalElements());
+
+        return ret;
+    }
+
+    private static WorkflowInstanceInfoDTO directConvert(WorkflowInstanceInfoDO workflowInstanceInfoDO) {
+        WorkflowInstanceInfoDTO workflowInstanceInfoDTO = new WorkflowInstanceInfoDTO();
+        BeanUtils.copyProperties(workflowInstanceInfoDO, workflowInstanceInfoDTO);
+        return workflowInstanceInfoDTO;
     }
 
     /**

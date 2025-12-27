@@ -16,6 +16,7 @@ import tech.powerjob.common.request.http.SaveWorkflowNodeRequest;
 import tech.powerjob.common.request.http.SaveWorkflowRequest;
 import tech.powerjob.common.request.query.InstancePageQuery;
 import tech.powerjob.common.request.query.JobInfoQuery;
+import tech.powerjob.common.request.query.WorkflowInstancePageQuery;
 import tech.powerjob.common.response.*;
 import tech.powerjob.server.core.instance.InstanceService;
 import tech.powerjob.server.core.service.AppInfoService;
@@ -264,6 +265,11 @@ public class OpenAPIController {
     @PostMapping(OpenAPIConstant.FETCH_WORKFLOW_INSTANCE_INFO)
     public ResultDTO<WorkflowInstanceInfoDTO> fetchWorkflowInstanceInfo(Long wfInstanceId, Long appId) {
         return ResultDTO.success(workflowInstanceService.fetchWorkflowInstanceInfo(wfInstanceId, appId));
+    }
+
+    @PostMapping(OpenAPIConstant.QUERY_WORKFLOW_INSTANCE)
+    public ResultDTO<PageResult<WorkflowInstanceInfoDTO>> queryWorkflowInstance(@RequestBody WorkflowInstancePageQuery powerQuery) {
+        return ResultDTO.success(workflowInstanceService.queryWorkflowInstance(powerQuery));
     }
 
     private void checkInstanceIdValid(Long instanceId, Long appId) {
