@@ -29,6 +29,11 @@ public class InstancePageQuery extends PowerPageQuery {
 
     private List<Integer> statusIn;
 
+    /**
+     * 该任务实例的类型，1-普通/2-工作流（InstanceType）
+     */
+    private Integer typeEq;
+
 
     private Date gmtCreateLt;
     private Date gmtCreateGt;

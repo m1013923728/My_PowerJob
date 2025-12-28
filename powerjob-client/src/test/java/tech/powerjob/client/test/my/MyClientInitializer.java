@@ -61,6 +61,7 @@ public class MyClientInitializer {
     public void testInstancePage() {
         InstancePageQuery instancePageQuery = new InstancePageQuery();
         instancePageQuery.setJobIdEq(2L);
+        instancePageQuery.setTypeEq(2);
         instancePageQuery.setIndex(1);
         instancePageQuery.setPageSize(1);
         ResultDTO<PageResult<InstanceInfoDTO>> listResultDTO = powerJobClient.queryInstanceInfo(instancePageQuery);
