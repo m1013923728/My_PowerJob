@@ -66,6 +66,8 @@ public class SaveWorkflowRequest implements Serializable {
 
     private LifeCycle lifeCycle;
 
+    private boolean updateWfInfoOnly;
+
     public void valid() {
         CommonUtils.requireNonNull(wfName, "workflow name can't be empty");
         CommonUtils.requireNonNull(appId, "appId can't be empty");

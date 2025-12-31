@@ -4,10 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import tech.powerjob.common.enums.SwitchableStatus;
 import tech.powerjob.common.enums.TimeExpressionType;
 import tech.powerjob.common.exception.PowerJobException;
 import tech.powerjob.common.model.LifeCycle;
@@ -15,7 +16,6 @@ import tech.powerjob.common.model.PEWorkflowDAG;
 import tech.powerjob.common.request.http.SaveWorkflowNodeRequest;
 import tech.powerjob.common.request.http.SaveWorkflowRequest;
 import tech.powerjob.server.common.SJ;
-import tech.powerjob.common.enums.SwitchableStatus;
 import tech.powerjob.server.common.timewheel.holder.InstanceTimeWheelService;
 import tech.powerjob.server.core.scheduler.TimingStrategyService;
 import tech.powerjob.server.core.service.NodeValidateService;
@@ -101,7 +101,10 @@ public class WorkflowService {
             wf = workflowInfoRepository.saveAndFlush(wf);
             wfId = wf.getId();
         }
-        wf.setPeDAG(validateAndConvert2String(wfId, req.getDag()));
+        // 更新 DAG 信息
+        if (!req.isUpdateWfInfoOnly()) {
+            wf.setPeDAG(validateAndConvert2String(wfId, req.getDag()));
+        }
         workflowInfoRepository.saveAndFlush(wf);
         return wfId;
     }

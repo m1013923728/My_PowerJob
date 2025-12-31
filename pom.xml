@@ -35,18 +35,6 @@
         </developer>
     </developers>
 
-    <modules>
-        <module>powerjob-worker</module>
-        <module>powerjob-server</module>
-        <module>powerjob-common</module>
-        <module>powerjob-client</module>
-        <module>powerjob-worker-agent</module>
-        <module>powerjob-worker-spring-boot-starter</module>
-        <module>powerjob-worker-samples</module>
-        <module>powerjob-official-processors</module>
-        <module>powerjob-remote</module>
-    </modules>
-
     <properties>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -70,6 +58,19 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <modules>
+        <module>powerjob-common</module>
+        <module>powerjob-client</module>
+        <module>powerjob-remote</module>
+        <module>powerjob-worker</module>
+        <module>powerjob-worker-spring-boot-starter</module>
+
+        <module>powerjob-worker-agent</module>
+        <module>powerjob-worker-samples</module>
+        <module>powerjob-official-processors</module>
+        <module>powerjob-server</module>
+    </modules>
 
     <profiles>
         <!-- 发布到中央仓库，需要使用 mvn xxx -Prelease 启用 -->
