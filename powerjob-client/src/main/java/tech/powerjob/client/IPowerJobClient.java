@@ -57,6 +57,8 @@ public interface IPowerJobClient {
 
     ResultDTO<PageResult<InstanceInfoDTO>> queryInstanceInfo(InstancePageQuery instancePageQuery);
 
+    ResultDTO<StringPageDTO> fetchInstanceLog(Long instanceId, Long index);
+
     /* ************* Workflow API list ************* */
     ResultDTO<Long> saveWorkflow(SaveWorkflowRequest request);
 

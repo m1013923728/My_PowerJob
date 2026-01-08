@@ -19,6 +19,7 @@ import tech.powerjob.common.request.query.InstancePageQuery;
 import tech.powerjob.common.response.AskResponse;
 import tech.powerjob.common.response.InstanceInfoDTO;
 import tech.powerjob.common.response.PageResult;
+import tech.powerjob.common.response.StringPageDTO;
 import tech.powerjob.common.serialize.JsonUtils;
 import tech.powerjob.remote.framework.base.URL;
 import tech.powerjob.server.common.constants.InstanceType;
@@ -28,6 +29,7 @@ import tech.powerjob.server.common.timewheel.holder.InstanceTimeWheelService;
 import tech.powerjob.server.core.DispatchService;
 import tech.powerjob.server.core.uid.IdGenerateService;
 import tech.powerjob.server.persistence.QueryConvertUtils;
+import tech.powerjob.server.persistence.StringPage;
 import tech.powerjob.server.persistence.remote.model.InstanceInfoDO;
 import tech.powerjob.server.persistence.remote.model.JobInfoDO;
 import tech.powerjob.server.persistence.remote.repository.InstanceInfoRepository;
@@ -261,6 +263,15 @@ public class InstanceService {
                 .setTotalItems(instanceInfoDOPage.getTotalElements());
 
         return ret;
+    }
+
+    public StringPageDTO fetchInstanceLog(Long instanceId, Long appId, Long index) {
+        StringPage stringPage = instanceLogService.fetchInstanceLog(appId, instanceId, index);
+        StringPageDTO dto = new StringPageDTO();
+        dto.setData(stringPage.getData());
+        dto.setIndex(stringPage.getIndex());
+        dto.setTotalPages(stringPage.getTotalPages());
+        return dto;
     }
 
     /**

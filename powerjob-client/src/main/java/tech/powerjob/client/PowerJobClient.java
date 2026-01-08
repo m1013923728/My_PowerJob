@@ -344,6 +344,15 @@ public class PowerJobClient implements IPowerJobClient, Closeable {
         return JSON.parseObject(post, PAGE_INSTANCE_RESULT_TYPE);
     }
 
+    @Override
+    public ResultDTO<StringPageDTO> fetchInstanceLog(Long instanceId, Long index) {
+        Map<String, String> param = Maps.newHashMap();
+        param.put("instanceId", instanceId.toString());
+        param.put("appId", appId.toString());
+        param.put("index", index.toString());
+        String post = requestService.request(OpenAPIConstant.FETCH_INSTANCE_LOG, PowerRequestBody.newFormRequestBody(param));
+        return JSON.parseObject(post, INSTANCE_LOG_TYPE);
+    }
     /* ************* Workflow API list ************* */
 
     /**

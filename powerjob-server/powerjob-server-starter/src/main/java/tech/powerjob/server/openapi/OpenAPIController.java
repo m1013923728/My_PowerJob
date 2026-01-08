@@ -191,8 +191,13 @@ public class OpenAPIController {
     }
 
     @PostMapping(OpenAPIConstant.QUERY_INSTANCE)
-    public ResultDTO<PageResult<InstanceInfoDTO>> queryInstance(@RequestBody InstancePageQuery powerQuery) {
-        return ResultDTO.success(instanceService.queryInstanceInfo(powerQuery));
+    public ResultDTO<PageResult<InstanceInfoDTO>> queryInstance(@RequestBody InstancePageQuery instancePageQuery) {
+        return ResultDTO.success(instanceService.queryInstanceInfo(instancePageQuery));
+    }
+
+    @PostMapping(OpenAPIConstant.FETCH_INSTANCE_LOG)
+    public ResultDTO<StringPageDTO> fetchInstanceLog(Long instanceId, Long appId, Long index) {
+        return ResultDTO.success(instanceService.fetchInstanceLog(instanceId, appId, index));
     }
 
     /* ************* Workflow 区 ************* */

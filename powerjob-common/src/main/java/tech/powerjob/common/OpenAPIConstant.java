@@ -41,6 +41,7 @@ public class OpenAPIConstant {
     public static final String FETCH_INSTANCE_STATUS = "/fetchInstanceStatus";
     public static final String FETCH_INSTANCE_INFO = "/fetchInstanceInfo";
     public static final String QUERY_INSTANCE = "/queryInstance";
+    public static final String FETCH_INSTANCE_LOG = "/fetchInstanceLog";
 
     /* ************* Workflow 区 ************* */
 

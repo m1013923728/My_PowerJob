@@ -77,4 +77,10 @@ public class MyClientInitializer {
         ResultDTO<PageResult<WorkflowInstanceInfoDTO>> listResultDTO = powerJobClient.queryWorkflowInstanceInfo(workflowInstancePageQuery);
         System.out.println(JSON.toJSONString(listResultDTO.getData()));
     }
+
+    @Test
+    public void testInstanceLog() {
+        ResultDTO<StringPageDTO> stringPageDTOResultDTO = powerJobClient.fetchInstanceLog(889273127199047936L, 0L);
+        System.out.println(JSON.toJSONString(stringPageDTOResultDTO.getData()));
+    }
 }
